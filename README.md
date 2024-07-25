@@ -56,8 +56,22 @@ $f(x) = \frac{\nu \exp(-\frac{1}{2}|\frac{x-\mu}{\sigma \xi^{sign(x-\mu)}}|^\nu)
 For each rolling window:
 1. Find optimal ARIMA(p,q) order
 2. Fit GARCH(1,1)-ARIMA(p,q) model
-3. Generate one-step-ahead forecast: $\hat{r}_{t+1|t} = E[r_{t+1}|\mathcal{F}_t]$
+3. Generate one-step-ahead forecast: 
+   $\hat{r}_{t+1|t} = E[r_{t+1}|\mathcal{F}_t]$
+   
+   Where $\mathcal{F}_t$ is the information set available at time t.
+   
 4. Predict direction: $d_{t+1} = \text{sign}(\hat{r}_{t+1|t})$
+
+The forecast is based on the mean equation of the GARCH-ARIMA model:
+
+$r_t = \mu + \sum_{i=1}^p \phi_i r_{t-i} + \sum_{j=1}^q \theta_j \epsilon_{t-j} + \epsilon_t$
+
+For a one-step-ahead forecast, this becomes:
+
+$\hat{r}_{t+1|t} = \mu + \sum_{i=1}^p \phi_i r_{t+1-i} + \sum_{j=1}^q \theta_j \epsilon_{t+1-j}$
+
+Where future innovations $\epsilon_{t+1}$ are set to their expected value of zero.
 
 ## Rationale for Model Choice
 1. ARIMA captures linear dependencies and seasonality in the mean of the series.
