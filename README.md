@@ -24,7 +24,7 @@ where:
 In this code, we're using ARIMA(p,0,q) models, assuming the series is already stationary (d=0):
 
 $\phi(B)r_t = \theta(B)\epsilon_t$
-
+   
 We select the best (p,q) combination using the Akaike Information Criterion (AIC):
 
 $AIC = 2k - 2\ln(\hat{L})$
@@ -61,17 +61,6 @@ For each rolling window:
    
    Where $\mathcal{F}_t$ is the information set available at time t.
    
-4. Predict direction: $d_{t+1} = \text{sign}(\hat{r}_{t+1|t})$
-
-The forecast is based on the mean equation of the GARCH-ARIMA model:
-
-$r_t = \mu + \sum_{i=1}^p \phi_i r_{t-i} + \sum_{j=1}^q \theta_j \epsilon_{t-j} + \epsilon_t$
-
-For a one-step-ahead forecast, this becomes:
-
-$\hat{r}_{t+1|t} = \mu + \sum_{i=1}^p \phi_i r_{t+1-i} + \sum_{j=1}^q \theta_j \epsilon_{t+1-j}$
-
-Where future innovations $\epsilon_{t+1}$ are set to their expected value of zero.
 
 ## Rationale for Model Choice
 1. ARIMA captures linear dependencies and seasonality in the mean of the series.
